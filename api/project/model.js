@@ -1,4 +1,3 @@
-const e = require('express')
 const db = require('../../data/dbConfig')
 
 const getProjects = async () => {
@@ -38,8 +37,6 @@ const postProject = async (project) => {
     
     
 }
-
-
 
 module.exports = {
     getProjects,
