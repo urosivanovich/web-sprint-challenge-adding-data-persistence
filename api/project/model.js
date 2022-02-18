@@ -1,9 +1,10 @@
 const db = require('../../data/dbConfig')
 
 const getProjects = async () => {
+
     const rows =  await db('projects')
  return rows.map(row => {
-     if(row.project_completed === 0){
+     if(!row.project_completed){
          return {
              ...row,
              project_completed: false
@@ -14,16 +15,17 @@ const getProjects = async () => {
             project_completed: true
         }
      }
- })
+  })
 }
 
 const postProject = async (project) => {
+    
     const newProject = await db("projects").insert(project)
     .then(([project_id]) => {
         return db('projects')
         .where('project_id', project_id).first()
     })
-    if(newProject.project_completed == 0){
+    if(!newProject.project_completed){
         return{
             ...project,
             project_completed:false
@@ -34,8 +36,6 @@ const postProject = async (project) => {
             project_completed:true
         }
     }
-    
-    
 }
 
 module.exports = {
